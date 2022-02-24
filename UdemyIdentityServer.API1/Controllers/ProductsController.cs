@@ -8,7 +8,7 @@ namespace UdemyIdentityServer.API1.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class ProductController : ControllerBase
+    public class ProductsController : ControllerBase
     {
         [Authorize(Policy = "ReadProduct")]
         [HttpGet]
