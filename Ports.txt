@@ -1,4 +1,4 @@
-AuthServer => http://localhost:5000
+AuthServer => https://localhost:5000
 Client1 => https://localhost:5006
 Client2 => https://localhost:5011
 API1 => https://localhost:5016

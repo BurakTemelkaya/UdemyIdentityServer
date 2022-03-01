@@ -1,5 +1,7 @@
 ﻿using IdentityServer4.Models;
+using IdentityServer4.Test;
 using System.Collections.Generic;
+using System.Security.Claims;
 
 namespace UdemyIdentityServer.AuthServer
 {
@@ -51,6 +53,38 @@ namespace UdemyIdentityServer.AuthServer
                     ClientSecrets=new[]{new Secret("secret".Sha256())},
                     AllowedGrantTypes=GrantTypes.ClientCredentials,
                     AllowedScopes= {"api1.read","api1.update","api2.write","api2.update" }
+                }
+            };
+        }
+        public static IEnumerable<IdentityResource> GetIdentityResources()
+        {
+            return new List<IdentityResource>()
+            {
+                new IdentityResources.OpenId(),
+                new IdentityResources.Profile()
+            };
+        }
+        public static IEnumerable<TestUser> GetTestUsers()
+        {
+            return new List<TestUser>()
+            {
+                new TestUser
+                {
+                    SubjectId="1",Username="burak",Password="password",
+                    Claims=new List<Claim>
+                    {
+                        new Claim("given_name","Burak"),
+                        new Claim("family_name","Temelkaya")
+                    }
+                },
+                new TestUser
+                {
+                    SubjectId="2",Username="fcakiroglu",Password="password",
+                    Claims=new List<Claim>
+                    {
+                        new Claim("given_name","Fatih"),
+                        new Claim("family_name","Çakıroğlu")
+                    }
                 }
             };
         }
