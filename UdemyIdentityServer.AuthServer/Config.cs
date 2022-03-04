@@ -1,4 +1,5 @@
-﻿using IdentityServer4.Models;
+﻿using IdentityServer4;
+using IdentityServer4.Models;
 using IdentityServer4.Test;
 using System.Collections.Generic;
 using System.Security.Claims;
@@ -53,6 +54,17 @@ namespace UdemyIdentityServer.AuthServer
                     ClientSecrets=new[]{new Secret("secret".Sha256())},
                     AllowedGrantTypes=GrantTypes.ClientCredentials,
                     AllowedScopes= {"api1.read","api1.update","api2.write","api2.update" }
+                },
+                new Client
+                {
+                    ClientId="Client1-Mvc",
+                    RequirePkce= false,
+                    ClientName="Client 1 app mvc uygulaması",
+                    ClientSecrets=new[]{new Secret("secret".Sha256())},
+                    AllowedGrantTypes = GrantTypes.Hybrid,
+                    RedirectUris=new List<string>{ "https://localhost:5006/signin-oidc" },
+                    AllowedScopes= {IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile }
                 }
             };
         }
