@@ -64,7 +64,7 @@ namespace UdemyIdentityServer.AuthServer
                     AllowedGrantTypes = GrantTypes.Hybrid,
                     RedirectUris=new List<string>{ "https://localhost:5006/signin-oidc" },
                     AllowedScopes= {IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile }
+                        IdentityServerConstants.StandardScopes.Profile,"api1.read" }
                 }
             };
         }

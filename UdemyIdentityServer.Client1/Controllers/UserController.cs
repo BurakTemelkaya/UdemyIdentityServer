@@ -8,7 +8,6 @@ namespace UdemyIdentityServer.Client1.Controllers
         [Authorize]
         public IActionResult Index()
         {
-            
             return View();
         }
     }
