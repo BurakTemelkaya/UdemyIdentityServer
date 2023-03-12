@@ -24,11 +24,13 @@ namespace UdemyIdentityServer.API1.Controllers
             };
             return Ok(productList);
         }
+
         [Authorize(Policy ="UpdateOrCreate")]
         public IActionResult UpdateProduct(int id)
         {
             return Ok($"id'si {id} olan ürün güncellenmiştir.");
         }
+
         [Authorize(Policy = "UpdateOrCreate")]
         public IActionResult CreateProduct(Product product)
         {

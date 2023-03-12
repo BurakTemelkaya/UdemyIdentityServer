@@ -40,6 +40,7 @@ namespace UdemyIdentityServer.Client1.Controllers
 
             if (token.IsError)
             {
+                //discovery.Error;
                 //loglama yap
             }
 
