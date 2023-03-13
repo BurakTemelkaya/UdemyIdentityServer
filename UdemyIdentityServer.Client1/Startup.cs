@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -8,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using UdemyIdentityServer.Client1.Service;
 
 namespace UdemyIdentityServer.Client1
 {
@@ -23,12 +25,19 @@ namespace UdemyIdentityServer.Client1
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpContextAccessor();
+
+            services.AddScoped<IApiResourceHttpClient, ApiResourceHttpClient>();
+
             services.AddAuthentication(opts =>
             {
                 opts.DefaultScheme = "Cookies";
                 opts.DefaultChallengeScheme = "oidc";
-            }).AddCookie("Cookies")
-            .AddOpenIdConnect("oidc", opts =>
+            }).AddCookie("Cookies", opts =>
+            {
+                opts.AccessDeniedPath = "/Home/AccessDenied";
+
+            }).AddOpenIdConnect("oidc", opts =>
              {
                  opts.SignInScheme = "Cookies";
                  opts.Authority = "https://localhost:5001";
@@ -39,6 +48,16 @@ namespace UdemyIdentityServer.Client1
                  opts.SaveTokens = true;
                  opts.Scope.Add("api1.read");
                  opts.Scope.Add("offline_access");
+                 opts.Scope.Add("CountryAndCity");
+                 opts.Scope.Add("Roles");
+                 opts.ClaimActions.MapUniqueJsonKey("country", "country");
+                 opts.ClaimActions.MapUniqueJsonKey("city", "city");
+                 opts.ClaimActions.MapUniqueJsonKey("role", "role");
+
+                 opts.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                 {
+                     RoleClaimType = "role"
+                 };
              });
 
             services.AddControllersWithViews();

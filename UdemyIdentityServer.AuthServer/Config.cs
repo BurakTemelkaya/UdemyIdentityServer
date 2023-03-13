@@ -65,12 +65,30 @@ namespace UdemyIdentityServer.AuthServer
                     AllowedGrantTypes = GrantTypes.Hybrid,
                     RedirectUris=new List<string>{ "https://localhost:5006/signin-oidc" },
                     PostLogoutRedirectUris=new List<string>{"https://localhost:5006/signout-callback-oidc"},
-                    AllowedScopes= {IdentityServerConstants.StandardScopes.OpenId,IdentityServerConstants.StandardScopes.Profile, "api1.read" ,IdentityServerConstants.StandardScopes.OfflineAccess},
+                    AllowedScopes= {IdentityServerConstants.StandardScopes.OpenId,IdentityServerConstants.StandardScopes.Profile, "api1.read" ,IdentityServerConstants.StandardScopes.OfflineAccess,"CountryAndCity","Roles"},
                     AccessTokenLifetime=2*60*60,
                     AllowOfflineAccess=true,
                     RefreshTokenUsage=TokenUsage.ReUse,
                     RefreshTokenExpiration=TokenExpiration.Absolute,
-                    AbsoluteRefreshTokenLifetime=(int)(DateTime.Now.AddMonths(2)-DateTime.Now).TotalSeconds,                  
+                    AbsoluteRefreshTokenLifetime=(int)(DateTime.Now.AddMonths(2)-DateTime.Now).TotalSeconds,
+                    RequireConsent=false,
+                },
+                new Client
+                {
+                    ClientId="Client2-Mvc",
+                    RequirePkce= false,
+                    ClientName="Client 2 app mvc uygulaması",
+                    ClientSecrets=new[]{new Secret("secret".Sha256())},
+                    AllowedGrantTypes = GrantTypes.Hybrid,
+                    RedirectUris=new List<string>{ "https://localhost:5011/signin-oidc" },
+                    PostLogoutRedirectUris=new List<string>{"https://localhost:5011/signout-callback-oidc"},
+                    AllowedScopes= {IdentityServerConstants.StandardScopes.OpenId,IdentityServerConstants.StandardScopes.Profile, "api1.read,api2.read" ,IdentityServerConstants.StandardScopes.OfflineAccess,"CountryAndCity","Roles"},
+                    AccessTokenLifetime=2*60*60,
+                    AllowOfflineAccess=true,
+                    RefreshTokenUsage=TokenUsage.ReUse,
+                    RefreshTokenExpiration=TokenExpiration.Absolute,
+                    AbsoluteRefreshTokenLifetime=(int)(DateTime.Now.AddMonths(2)-DateTime.Now).TotalSeconds,
+                    RequireConsent=false,
                 }
             };
         }
@@ -79,7 +97,9 @@ namespace UdemyIdentityServer.AuthServer
             return new List<IdentityResource>()
             {
                 new IdentityResources.OpenId(),
-                new IdentityResources.Profile()
+                new IdentityResources.Profile(),
+                new IdentityResource(){Name="CountryAndCity",DisplayName="Country and City",Description="Kullanıcının ülke ve şehir bilgisi.", UserClaims=new[]{ "country","city"} },
+                new IdentityResource(){Name="Roles",DisplayName="Roles",Description="Kullanıcı rolleri",UserClaims=new[]{"role"}}
             };
         }
         public static IEnumerable<TestUser> GetTestUsers()
@@ -92,7 +112,10 @@ namespace UdemyIdentityServer.AuthServer
                     Claims=new List<Claim>
                     {
                         new Claim("given_name","Burak"),
-                        new Claim("family_name","Temelkaya")
+                        new Claim("family_name","Temelkaya"),
+                        new Claim("country","Türkiye"),
+                        new Claim("city","İstanbul"),
+                        new Claim("role","admin"),
                     }
                 },
                 new TestUser
@@ -101,7 +124,10 @@ namespace UdemyIdentityServer.AuthServer
                     Claims=new List<Claim>
                     {
                         new Claim("given_name","Fatih"),
-                        new Claim("family_name","Çakıroğlu")
+                        new Claim("family_name","Çakıroğlu"),
+                        new Claim("country","Türkiye"),
+                        new Claim("city","Ankara"),
+                        new Claim("role","customer"),
                     }
                 }
             };
