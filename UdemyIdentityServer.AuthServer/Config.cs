@@ -65,7 +65,7 @@ namespace UdemyIdentityServer.AuthServer
                     AllowedGrantTypes = GrantTypes.Hybrid,
                     RedirectUris=new List<string>{ "https://localhost:5006/signin-oidc" },
                     PostLogoutRedirectUris=new List<string>{"https://localhost:5006/signout-callback-oidc"},
-                    AllowedScopes= {IdentityServerConstants.StandardScopes.OpenId,IdentityServerConstants.StandardScopes.Profile, "api1.read" ,IdentityServerConstants.StandardScopes.OfflineAccess,"CountryAndCity","Roles"},
+                    AllowedScopes= {IdentityServerConstants.StandardScopes.Email,IdentityServerConstants.StandardScopes.OpenId,IdentityServerConstants.StandardScopes.Profile, "api1.read" ,IdentityServerConstants.StandardScopes.OfflineAccess,"CountryAndCity","Roles"},
                     AccessTokenLifetime=2*60*60,
                     AllowOfflineAccess=true,
                     RefreshTokenUsage=TokenUsage.ReUse,
@@ -89,6 +89,17 @@ namespace UdemyIdentityServer.AuthServer
                     RefreshTokenExpiration=TokenExpiration.Absolute,
                     AbsoluteRefreshTokenLifetime=(int)(DateTime.Now.AddMonths(2)-DateTime.Now).TotalSeconds,
                     RequireConsent=false,
+                },
+                new Client
+                {
+                    ClientId="js-client",
+                    RequireClientSecret=false,
+                    ClientName="Js Client (Angular)",
+                    AllowedGrantTypes=GrantTypes.Code,
+                    AllowedScopes= {IdentityServerConstants.StandardScopes.OpenId,IdentityServerConstants.StandardScopes.Profile, IdentityServerConstants.StandardScopes.Email, "api1.read"},
+                    RedirectUris={"http://localhost:4200/callback"},
+                    AllowedCorsOrigins={"http://localhost:4200"},
+                    PostLogoutRedirectUris={"http://localhost:4200"},
                 }
             };
         }
@@ -96,6 +107,7 @@ namespace UdemyIdentityServer.AuthServer
         {
             return new List<IdentityResource>()
             {
+                new IdentityResources.Email(),
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
                 new IdentityResource(){Name="CountryAndCity",DisplayName="Country and City",Description="Kullanıcının ülke ve şehir bilgisi.", UserClaims=new[]{ "country","city"} },
