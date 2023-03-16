@@ -89,6 +89,17 @@ namespace UdemyIdentityServer.AuthServer
                     RefreshTokenExpiration=TokenExpiration.Absolute,
                     AbsoluteRefreshTokenLifetime=(int)(DateTime.Now.AddMonths(2)-DateTime.Now).TotalSeconds,
                     RequireConsent=false,
+                },
+                new Client
+                {
+                    ClientId="js-client",
+                    RequireClientSecret=false,
+                    ClientName="Js Client (Angular)",
+                    AllowedGrantTypes=GrantTypes.Code,
+                    AllowedScopes= {IdentityServerConstants.StandardScopes.OpenId,IdentityServerConstants.StandardScopes.Profile, IdentityServerConstants.StandardScopes.Email, "api1.read"},
+                    RedirectUris={"http://localhost:4200/callback"},
+                    AllowedCorsOrigins={"http://localhost:4200"},
+                    PostLogoutRedirectUris={"http://localhost:4200"},
                 }
             };
         }
