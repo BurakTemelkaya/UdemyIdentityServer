@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using UdemyIdentityServer.AuthServer.Models;
 using UdemyIdentityServer.AuthServer.Reposistory;
@@ -35,15 +36,29 @@ namespace UdemyIdentityServer.AuthServer
                 option.UseSqlServer(Configuration.GetConnectionString("LocalDb"));
             });
 
+            var assemblyName = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
+
             services.AddIdentityServer()
-                .AddInMemoryApiResources(Config.GetApiResources())
-                .AddInMemoryApiScopes(Config.GetApiScopes())
-                .AddInMemoryClients(Config.GetClients())
-                .AddInMemoryIdentityResources(Config.GetIdentityResources())
-                //.AddTestUsers(Config.GetTestUsers().ToList())
+                .AddConfigurationStore(opts =>
+                {
+                    opts.ConfigureDbContext = c => c.UseSqlServer(Configuration.GetConnectionString("LocalDb"),
+                        sqloptions => sqloptions.MigrationsAssembly(assemblyName));
+                })
+                .AddOperationalStore(opts =>
+                {
+                    opts.ConfigureDbContext = c => c.UseSqlServer(Configuration.GetConnectionString("LocalDb"),
+                        sqloptions => sqloptions.MigrationsAssembly(assemblyName));
+                })
+                //.AddInMemoryApiResources(Config.GetApiResources())
+                //.AddInMemoryApiScopes(Config.GetApiScopes())
+                //.AddInMemoryClients(Config.GetClients())
+                //.AddInMemoryIdentityResources(Config.GetIdentityResources())
+                //.AddTestUsers(Config.GetTestUsers().ToList())               
                 .AddDeveloperSigningCredential()
-                .AddProfileService<CustomProfileService>();
-                
+                .AddProfileService<CustomProfileService>()
+                .AddResourceOwnerValidator<ResourceOwnerPasswordValidator>();
+
+
 
             services.AddControllersWithViews();
         }

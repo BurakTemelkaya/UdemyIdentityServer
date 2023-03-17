@@ -29,10 +29,11 @@ namespace UdemyIdentityServer.Client1.Controllers
             return View();
         }
 
-        public async Task LogOut()
+        public async Task<IActionResult> LogOut()
         {
             await HttpContext.SignOutAsync("Cookies");
-            await HttpContext.SignOutAsync("oidc");
+            return RedirectToAction("Index");
+            //await HttpContext.SignOutAsync("oidc"); identity serverdan çıkma
         }
 
         public async Task<IActionResult> GetRefreshToken()
@@ -48,15 +49,16 @@ namespace UdemyIdentityServer.Client1.Controllers
                 //loglama yap
             }
 
-            RefreshTokenRequest refreshTokenRequest = new RefreshTokenRequest();
+            RefreshTokenRequest refreshTokenRequest = new()
+            {
+                ClientId = _configuration["Client1ResourceOwnerMvc:ClientId"],
 
-            refreshTokenRequest.ClientId = _configuration["Client1Mvc:ClientId"];
+                ClientSecret = _configuration["Client1ResourceOwnerMvc:ClientSecret"],
 
-            refreshTokenRequest.ClientSecret = _configuration["Client1Mvc:ClientSecret"];
+                RefreshToken = refreshToken,
 
-            refreshTokenRequest.RefreshToken = refreshToken;
-
-            refreshTokenRequest.Address = discovery.TokenEndpoint;
+                Address = discovery.TokenEndpoint
+            };
 
             var token = await httpClient.RequestRefreshTokenAsync(refreshTokenRequest);
 
