@@ -11,7 +11,6 @@ namespace UdemyIdentityServerIdentityAPI.AuthServer.Models
         [EmailAddress]
         public string Email { get; set; }
 
-        [DataType(DataType.Password)]
         [Required]
         public string Password { get; set; }
 
