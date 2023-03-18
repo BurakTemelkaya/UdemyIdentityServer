@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using UdemyIdentityServerIdentityAPI.AuthServer.Services;
 
 namespace UdemyIdentityServer_IdentityAPI.AuthServer
 {
@@ -28,7 +29,7 @@ namespace UdemyIdentityServer_IdentityAPI.AuthServer
 
         public void ConfigureServices(IServiceCollection services)
         {
-            
+
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
@@ -51,7 +52,8 @@ namespace UdemyIdentityServer_IdentityAPI.AuthServer
                 .AddInMemoryApiScopes(Config.GetApiScopes())
                 .AddInMemoryApiResources(Config.GetApiResources())
                 .AddInMemoryClients(Config.GetClients())
-                .AddAspNetIdentity<ApplicationUser>();
+                .AddAspNetIdentity<ApplicationUser>()
+                .AddResourceOwnerValidator<IdentityResourceOwnerPasswordValidator>();
 
             // not recommended for production - you need to store your key material somewhere secure
             builder.AddDeveloperSigningCredential();
@@ -60,7 +62,7 @@ namespace UdemyIdentityServer_IdentityAPI.AuthServer
                 .AddGoogle(options =>
                 {
                     options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
-                    
+
                     // register your IdentityServer with Google at https://console.developers.google.com
                     // enable the Google+ API
                     // set the redirect URI to https://localhost:5001/signin-google
