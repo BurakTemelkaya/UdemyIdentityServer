@@ -48,6 +48,7 @@ namespace UdemyIdentityServer.AuthServer
                     AllowedGrantTypes=GrantTypes.ClientCredentials,
                     AllowedScopes= {"api1.read" }
                 },
+
                 new Client
                 {
                     ClientId="Client2",
@@ -56,6 +57,7 @@ namespace UdemyIdentityServer.AuthServer
                     AllowedGrantTypes=GrantTypes.ClientCredentials,
                     AllowedScopes= {"api1.read","api1.update","api2.write","api2.update" }
                 },
+
                 new Client
                 {
                     ClientId="Client1-Mvc",
@@ -65,7 +67,7 @@ namespace UdemyIdentityServer.AuthServer
                     AllowedGrantTypes = GrantTypes.Hybrid,
                     RedirectUris=new List<string>{ "https://localhost:5006/signin-oidc" },
                     PostLogoutRedirectUris=new List<string>{"https://localhost:5006/signout-callback-oidc"},
-                    AllowedScopes= {IdentityServerConstants.StandardScopes.OpenId,IdentityServerConstants.StandardScopes.Profile, "api1.read" ,IdentityServerConstants.StandardScopes.OfflineAccess,"CountryAndCity","Roles"},
+                    AllowedScopes= {IdentityServerConstants.StandardScopes.Email,IdentityServerConstants.StandardScopes.OpenId,IdentityServerConstants.StandardScopes.Profile, "api1.read" ,IdentityServerConstants.StandardScopes.OfflineAccess,"CountryAndCity","Roles"},
                     AccessTokenLifetime=2*60*60,
                     AllowOfflineAccess=true,
                     RefreshTokenUsage=TokenUsage.ReUse,
@@ -73,6 +75,7 @@ namespace UdemyIdentityServer.AuthServer
                     AbsoluteRefreshTokenLifetime=(int)(DateTime.Now.AddMonths(2)-DateTime.Now).TotalSeconds,
                     RequireConsent=false,
                 },
+
                 new Client
                 {
                     ClientId="Client2-Mvc",
@@ -89,13 +92,40 @@ namespace UdemyIdentityServer.AuthServer
                     RefreshTokenExpiration=TokenExpiration.Absolute,
                     AbsoluteRefreshTokenLifetime=(int)(DateTime.Now.AddMonths(2)-DateTime.Now).TotalSeconds,
                     RequireConsent=false,
-                }
+                },
+
+                new Client
+                {
+                    ClientId="js-client",
+                    RequireClientSecret=false,
+                    ClientName="Js Client (Angular)",
+                    AllowedGrantTypes=GrantTypes.Code,
+                    AllowedScopes= {IdentityServerConstants.StandardScopes.OpenId,IdentityServerConstants.StandardScopes.Profile, IdentityServerConstants.StandardScopes.Email, "api1.read"},
+                    RedirectUris={"http://localhost:4200/callback"},
+                    AllowedCorsOrigins={"http://localhost:4200"},
+                    PostLogoutRedirectUris={"http://localhost:4200"},
+                },
+
+                new Client
+                {
+                    ClientId="Client1-ResourceOwner-Mvc",
+                    ClientName="Client 1 app mvc uygulaması",
+                    ClientSecrets=new[]{new Secret("secret".Sha256())},
+                    AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+                    AllowedScopes= {IdentityServerConstants.StandardScopes.Email,IdentityServerConstants.StandardScopes.OpenId,IdentityServerConstants.StandardScopes.Profile, "api1.read" ,IdentityServerConstants.StandardScopes.OfflineAccess,"CountryAndCity","Roles"},
+                    AccessTokenLifetime=2*60*60,
+                    AllowOfflineAccess=true,
+                    RefreshTokenUsage=TokenUsage.ReUse,
+                    RefreshTokenExpiration=TokenExpiration.Absolute,
+                    AbsoluteRefreshTokenLifetime=(int)(DateTime.Now.AddMonths(2)-DateTime.Now).TotalSeconds,
+                },
             };
         }
         public static IEnumerable<IdentityResource> GetIdentityResources()
         {
             return new List<IdentityResource>()
             {
+                new IdentityResources.Email(),
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
                 new IdentityResource(){Name="CountryAndCity",DisplayName="Country and City",Description="Kullanıcının ülke ve şehir bilgisi.", UserClaims=new[]{ "country","city"} },
