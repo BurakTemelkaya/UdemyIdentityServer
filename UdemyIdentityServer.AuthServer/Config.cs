@@ -111,7 +111,7 @@ namespace UdemyIdentityServer.AuthServer
                     ClientId="Client1-ResourceOwner-Mvc",
                     ClientName="Client 1 app mvc uygulaması",
                     ClientSecrets=new[]{new Secret("secret".Sha256())},
-                    AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+                    AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials,
                     AllowedScopes= {IdentityServerConstants.StandardScopes.Email,IdentityServerConstants.StandardScopes.OpenId,IdentityServerConstants.StandardScopes.Profile, "api1.read" ,IdentityServerConstants.StandardScopes.OfflineAccess,"CountryAndCity","Roles"},
                     AccessTokenLifetime=2*60*60,
                     AllowOfflineAccess=true,
