@@ -3,20 +3,22 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UdemyIdentityServer.AuthServer", "UdemyIdentityServer.AuthServer\UdemyIdentityServer.AuthServer.csproj", "{05C442A7-E9F5-488D-8DE2-4EAA7FD49FCA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UdemyIdentityServer.AuthServer", "UdemyIdentityServer.AuthServer\UdemyIdentityServer.AuthServer.csproj", "{05C442A7-E9F5-488D-8DE2-4EAA7FD49FCA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UdemyIdentityServer.Client1", "UdemyIdentityServer.Client1\UdemyIdentityServer.Client1.csproj", "{608DC26F-963A-4F68-BE80-0D34718F4808}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UdemyIdentityServer.Client1", "UdemyIdentityServer.Client1\UdemyIdentityServer.Client1.csproj", "{608DC26F-963A-4F68-BE80-0D34718F4808}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UdemyIdentityServer.Client2", "UdemyIdentityServer.Client2\UdemyIdentityServer.Client2.csproj", "{8785D895-3732-45ED-BE39-A532716B88FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UdemyIdentityServer.Client2", "UdemyIdentityServer.Client2\UdemyIdentityServer.Client2.csproj", "{8785D895-3732-45ED-BE39-A532716B88FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UdemyIdentityServer.API1", "UdemyIdentityServer.API1\UdemyIdentityServer.API1.csproj", "{E373E049-D681-42C0-B293-174CF12A8482}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UdemyIdentityServer.API1", "UdemyIdentityServer.API1\UdemyIdentityServer.API1.csproj", "{E373E049-D681-42C0-B293-174CF12A8482}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UdemyIdentityServer.API2", "UdemyIdentityServer.API2\UdemyIdentityServer.API2.csproj", "{74393996-2D6B-44E8-88A1-6BBBF6B6FD02}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UdemyIdentityServer.API2", "UdemyIdentityServer.API2\UdemyIdentityServer.API2.csproj", "{74393996-2D6B-44E8-88A1-6BBBF6B6FD02}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BA8963F8-753B-4267-80AE-A273E88D3CF1}"
 	ProjectSection(SolutionItems) = preProject
 		Ports.txt = Ports.txt
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UdemyIdentityServer-IdentityAPI.AuthServer", "UdemyIdentityServer-IdentityAPI.AuthServer\UdemyIdentityServer-IdentityAPI.AuthServer.csproj", "{49B008E1-CA64-4056-984E-3C3479E68835}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,6 +46,10 @@ Global
 		{74393996-2D6B-44E8-88A1-6BBBF6B6FD02}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{74393996-2D6B-44E8-88A1-6BBBF6B6FD02}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{74393996-2D6B-44E8-88A1-6BBBF6B6FD02}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49B008E1-CA64-4056-984E-3C3479E68835}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49B008E1-CA64-4056-984E-3C3479E68835}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49B008E1-CA64-4056-984E-3C3479E68835}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49B008E1-CA64-4056-984E-3C3479E68835}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
